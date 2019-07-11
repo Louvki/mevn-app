@@ -1,0 +1,31 @@
+{
+  "name": "fullstack-vue-express",
+  "version": "1.0.0",
+  "description": "Full stack application using vue for the client and nodejs/express for the server side.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Louvki/fullstack-vue-express.git"
+  },
+  "author": "Lukas Vismantas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Louvki/fullstack-vue-express/issues"
+  },
+  "homepage": "https://github.com/Louvki/fullstack-vue-express#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.2.7",
+    "mongoose": "^5.6.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
