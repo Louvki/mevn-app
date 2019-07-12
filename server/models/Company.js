@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
-
 const CompanySchema = new mongoose.Schema({
+    ownerId: {
+        type: mongoose.Types.ObjectId,
+        default: '',
+    },
     name: {
         type: String,
         default: '',
@@ -24,8 +27,12 @@ const CompanySchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        default: ''
+        default: '',
     },
+    coOwners: {
+        type: Array,
+        default: [],
+    }
 }, {
         timestamps: true,
     });

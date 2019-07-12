@@ -20,6 +20,7 @@ app.use(cors());
 // API routes
 app.use('/api/companies', require('./routes/api/companies'))
 app.use('/api/register', require('./routes/api/register'))
+app.use('/api/login', require('./routes/api/login'))
 
 // Handle production
 if (!isDev) {
