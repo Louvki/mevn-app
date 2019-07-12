@@ -11,16 +11,16 @@ router.route('/').post((req, res) => {
         return ResHelper.fail(res, { email: 'Please enter a valid email address' });
     }
 
-    User.findOne(email)
+    User.findOne({email})
         .then(user => {
-            if (AuthHelper.correctPassword(password, user.password)) {
+            if (user.isValidPassword(password)) {
                 const token = AuthHelper.createToken(user._id);
                 ResHelper.success(res, { message: 'Login successful!', token });
             } else {
                 ResHelper.fail(res, { message: 'Wrong password' });
             }
         })
-        .catch(err => ResHelper.error(res, err.message))
+        .catch(err => ResHelper.error(res, err))
 
 });
 

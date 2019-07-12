@@ -12,10 +12,11 @@ const fail = (res, payload, status = 400) => {
     });
 }
 
-const error = (res, error, status = 500) => {
+const error = (res, err, status = 500) => {
+    console.log('My mom ', err);
     res.status(status).json({
         "status": "error",
-        message: error.message
+        message: err.message
     });
 }
 

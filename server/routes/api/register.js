@@ -17,23 +17,23 @@ router.route('/').post((req, res) => {
         return ResHelper.fail(res, failData);
     }
 
-    User.find(email)
+    User.find({email})
         .then(users => {
             // Check if email is taken
             if (users.length) {
-                ResHelper.fail(res, { email: 'An account with this email already exists' })
+                return ResHelper.fail(res, { email: 'An account with this email already exists' })
             }
 
             // Save user
-            const newUser = User({ firstName, lastName, email, password: AuthHelper.generateHash(password) });
+            const newUser = User({ firstName, lastName, email, password });
             newUser.save()
                 .then(user => {
                     const token = AuthHelper.createToken(user._id)
                     ResHelper.success(res, { message: 'Registration successful!', token });
                 })
-                .catch(err => ResHelper.error(res, err.message))
+                .catch(err => ResHelper.error(res, err))
         })
-        .catch(err => ResHelper.error(res, err.message));
+        .catch(err => ResHelper.error(res, err));
 });
 
 module.exports = router;
