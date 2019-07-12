@@ -1,14 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
+const { ATLAS_URI } = require('./config/config');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 5000;
-const uri = process.env.ATLAS_URI;
 
 // Set up Mongoose
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(ATLAS_URI, { useNewUrlParser: true, useCreateIndex: true });
 mongoose.connection.once('open', () => console.log('MongoDB database connection established successfully!'));
 
 // Set up middleware
