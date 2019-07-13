@@ -1,24 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <PostComponent />
+    <NavBar />
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 
 <script>
-import PostComponent from './components/PostComponent.vue'
+import CompanyList from "./views/CompanyList.vue";
+import NavBar from "./components/NavBar.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    PostComponent
+    CompanyList,
+    NavBar
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
