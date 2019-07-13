@@ -1,37 +1,27 @@
 const mongoose = require('mongoose');
 
 const CompanySchema = new mongoose.Schema({
-    ownerId: {
-        type: mongoose.Types.ObjectId,
-        default: '',
-    },
     name: {
         type: String,
-        default: '',
+        required: true,
     },
     address: {
         type: String,
-        default: ''
+        required: true,
     },
     city: {
         type: String,
-        default: ''
+        required: true,
     },
     country: {
         type: String,
-        default: ''
+        required: true,
     },
     email: {
         type: String,
-        default: ''
     },
     phoneNumber: {
         type: String,
-        default: '',
-    },
-    coOwners: {
-        type: Array,
-        default: [],
     }
 }, {
         timestamps: true,

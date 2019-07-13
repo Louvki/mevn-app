@@ -13,7 +13,6 @@ const fail = (res, payload, status = 400) => {
 }
 
 const error = (res, err, status = 500) => {
-    console.log('My mom ', err);
     res.status(status).json({
         "status": "error",
         message: err.message

@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const passport = require('passport');
 const Company = require('../../models/Company');
 const ResHelper = require('../../helpers/ResHelper');
 const AuthHelper = require('../../helpers/AuthHelper');
@@ -12,11 +11,12 @@ router.route('/').get((req, res) => {
 })
 
 // Add company
-// TODO: Only logged in users can add a company
-router.route('/').post(passport.authenticate('jwt', { session: false }), (req, res) => {
-    const user = req.user;
+router.route('/').post((req, res) => {
     const { name, address, city, country, phoneNumber, } = req.body;
     const email = req.body.email.toLowerCase();
+
+    // TODO: Get user from headers
+
 
     const failData = {};
     if (!name) { failData.name = ' Name is required' }
@@ -45,9 +45,13 @@ router.route('/:id').get((req, res) => {
 })
 
 // Update company
-// TODO: Only owners and co-owners can edit a company
 router.route('/:id').put((req, res) => {
     const { name, address, city, country, email, phoneNumber } = req.body;
+
+    // TODO: Get user from headers
+    const test = req.headers;
+    console.log(test);
+
 
     const failData = {};
     if (!name && name !== undefined) { failData.name = ' Name is required' }
@@ -72,8 +76,9 @@ router.route('/:id').put((req, res) => {
 })
 
 // Delete company
-// TODO: Only owners can delete a company
 router.route('/:id').delete((req, res) => {
+    // TODO: Get user from headers
+
     Company.findByIdAndDelete(req.params.id)
         .then(company => ResHelper.success(res, { _id: company._id }))
         .catch(err => ResHelper.error(res, err))
