@@ -5,9 +5,9 @@ const createToken = (userid) => {
     // Tokens are valid for one day
     return JWT.sign({
         sub: userid,
-        exp: Date.now()  + 86400000
+        exp: Date.now() + 86400000
     }, JWT_SECRET)
-};
+}
 
 const verifyToken = (token) => {
     return JWT.verify(token, JWT_SECRET);

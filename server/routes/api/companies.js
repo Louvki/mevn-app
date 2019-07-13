@@ -22,7 +22,7 @@ router.route('/:id').get((req, res) => {
 // Add company
 router.route('/').post(async (req, res) => {
     const { name, address, city, country, phoneNumber, } = req.body;
-    const email = req.body.email.toLowerCase();
+    const email = req.body.email ? req.body.email.toLowerCase() : undefined;
     let user;
 
     // Role validation
@@ -137,7 +137,7 @@ router.route('/:id').delete(async (req, res) => {
 
 // Add partner(Beneficial owner)
 router.route('/:id/invite').post(async (req, res) => {
-    const email = req.body.email.toLowerCase();
+    const email = req.body.email ? req.body.email.toLowerCase() : undefined;
     const companyId = req.params.id;
 
     // Role validation

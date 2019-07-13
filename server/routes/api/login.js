@@ -5,22 +5,27 @@ const AuthHelper = require('../../helpers/AuthHelper');
 
 router.route('/').post((req, res) => {
     const password = req.body.password;
-    const email = req.body.email.toLowerCase();
+    const email = req.body.email ? req.body.email.toLowerCase() : undefined;
 
-    if(!email || !AuthHelper.validEmail(email)) {
-    return ResHelper.fail(res, { email: 'Please enter a valid email address' });
-}
 
-User.findOne({ email })
-    .then(user => {
-        if (user.isValidPassword(password)) {
-            const token = AuthHelper.createToken(user._id);
-            ResHelper.success(res, { message: 'Login successful!', token });
-        } else {
-            ResHelper.fail(res, { message: 'Wrong password' });
-        }
-    })
-    .catch(err => ResHelper.error(res, err))
+    if (!email || !AuthHelper.validEmail(email)) {
+        return ResHelper.fail(res, { email: 'Please enter a valid email address' });
+    }
+
+    User.findOne({ email })
+        .then(user => {
+            if (!user) {
+                return ResHelper.fail(res, { email: 'No user found with that email' });
+            }
+
+            if (user.isValidPassword(password)) {
+                const token = AuthHelper.createToken(user._id);
+                ResHelper.success(res, { message: 'Login successful!', token });
+            } else {
+                ResHelper.fail(res, { message: 'Wrong password' });
+            }
+        })
+        .catch(err => ResHelper.error(res, err))
 
 });
 

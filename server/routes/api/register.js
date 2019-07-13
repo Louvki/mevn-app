@@ -5,7 +5,7 @@ const AuthHelper = require('../../helpers/AuthHelper');
 
 router.route('/').post((req, res) => {
     const { firstName, lastName, password } = req.body
-    const email = req.body.email.toLowerCase();
+    const email = req.body.email ? req.body.email.toLowerCase() : undefined;
 
     // Validation
     const failData = {};
