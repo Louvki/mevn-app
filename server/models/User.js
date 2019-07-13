@@ -19,13 +19,13 @@ const UserSchema = new mongoose.Schema({
         required: true,
         min: 6,
     },
-    companiesOwned: {
-        type: Array,
-        default: []
+    companies: {
+        type: Object,
+        default: {},
     },
-    companiesCoOwned: {
-        type: Array,
-        default: []
+    companiesPartner: {
+        type: Object,
+        default: {},
     }
 }, {
         timestamps: true,
