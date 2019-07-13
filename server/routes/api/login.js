@@ -19,7 +19,7 @@ router.route('/').post((req, res) => {
             }
 
             if (user.isValidPassword(password)) {
-                const token = AuthHelper.createToken(user._id);
+                const token = AuthHelper.createToken(user);
                 ResHelper.success(res, { message: 'Login successful!', token });
             } else {
                 ResHelper.fail(res, { message: 'Wrong password' });

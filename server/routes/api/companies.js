@@ -28,9 +28,9 @@ router.route('/').post(async (req, res) => {
     // Role validation
     try {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
-        user = await User.findById(payload.sub);
+        user = await User.findById(payload.userId);
         if (!user) {
-            return ResHelper.fail(res, { auth: 'Access denied: You need to be logged in to add a company' });
+            return ResHelper.fail(res, { auth: 'Access denied: You need to be logged in to add a company' }, 403);
         }
     } catch (err) {
         return ResHelper.fail(res, { token: err.message });
@@ -80,9 +80,9 @@ router.route('/:id').put(async (req, res) => {
     // Role validation
     try {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
-        const user = await User.findById(payload.sub);
+        const user = await User.findById(payload.userId);
         if (!user.companies[companyId] || !user.companiesPartner[companyId]) {
-            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner or a co-owner to change the company' });
+            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner or a co-owner to change the company' }, 403);
         }
     } catch (err) {
         return ResHelper.fail(res, { token: err.message });
@@ -120,9 +120,9 @@ router.route('/:id').delete(async (req, res) => {
     // Role validation
     try {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
-        const user = await User.findById(payload.sub);
+        const user = await User.findById(payload.userId);
         if (!user.companies[companyId] || !user.companiesPartner[companyId]) {
-            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner to delete a company' });
+            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner to delete a company' }, 403);
         }
     } catch (err) {
         return ResHelper.fail(res, { token: err.message });
@@ -143,9 +143,9 @@ router.route('/:id/invite').post(async (req, res) => {
     // Role validation
     try {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
-        const user = await User.findById(payload.sub);
+        const user = await User.findById(payload.userId);
         if (!user) {
-            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner to be able to add partners' });
+            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner to be able to add partners' }, 403);
         }
     } catch (err) {
         return ResHelper.fail(res, { token: err.message });

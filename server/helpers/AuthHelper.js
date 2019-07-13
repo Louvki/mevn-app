@@ -1,12 +1,9 @@
 const JWT = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/config');
 
-const createToken = (userid) => {
+const createToken = (user) => {
     // Tokens are valid for one day
-    return JWT.sign({
-        sub: userid,
-        exp: Date.now() + 86400000
-    }, JWT_SECRET)
+    return JWT.sign({ userid: user.id }, JWT_SECRET, { expiresIn: '24h' })
 }
 
 const verifyToken = (token) => {

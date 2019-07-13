@@ -28,7 +28,7 @@ router.route('/').post((req, res) => {
             const newUser = User({ firstName, lastName, email, password });
             newUser.save()
                 .then(user => {
-                    const token = AuthHelper.createToken(user._id)
+                    const token = AuthHelper.createToken(user)
                     ResHelper.success(res, { message: 'Registration successful!', token });
                 })
                 .catch(err => ResHelper.error(res, err))
