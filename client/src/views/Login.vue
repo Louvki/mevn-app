@@ -47,6 +47,9 @@ export default {
       const { dispatch } = this.$store;
       if (email && password) {
         dispatch("auth/login", { email, password });
+        this.email = "";
+        this.password = ""
+        this.submitted = false;
       }
     }
   }

@@ -33,7 +33,7 @@
     </div>
 
     <div class="form-group">
-      <button class="btn btn-primary" :disabled="loggingIn">Register</button>
+      <button class="btn btn-primary">Register</button>
     </div>
   </form>
 </template>
@@ -55,7 +55,7 @@ export default {
       const { firstName, lastName, email, password } = this;
       const { dispatch } = this.$store;
       if (firstName && lastName && email && password) {
-        dispatch("auth/register", { email, password });
+        dispatch("auth/register", { firstName, lastName, email, password });
       }
     }
   }

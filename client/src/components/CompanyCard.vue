@@ -1,5 +1,5 @@
 <template>
-  <router-link class="company-link" :to="{ name: 'company-details', params: { id: company.id } }">
+  <router-link class="company-link" :to="{ name: 'company-details', params: { id: company._id } }">
     <div class="company-card -shadow">
       <h1 class="title">{{ company.name }}</h1>
     </div>

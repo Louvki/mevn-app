@@ -12,8 +12,8 @@ const actions = {
         commit('SET_COMPANIES', companies);
       })
   },
-  getCompany(companyId) {
-    return state.companies.find((e) => e.id === companyId);
+  getCompany({ }, companyId) {
+    return state.companies.find((x) => x._id === companyId);
   },
   createCompany({ dispatch }, company) {
     return CompanyService.createCompany(company)

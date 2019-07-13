@@ -15,11 +15,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: { name: 'companies' },
-    },
-    {
-      path: '/companies',
-      name: 'companies',
+      name: 'company-list',
       component: CompanyList,
     },
     {
@@ -28,8 +24,9 @@ const router = new Router({
       component: CompanyDetails,
       props: true,
       beforeEnter(to, from, next) {
-        store.dispatch('event/getEvent', to.params.id).then((event) => {
-          to.params.event = event;
+        store.dispatch('company/getCompany', to.params.id).then((company) => {
+          to.params.company = company;
+          console.log(company)
           next();
         }).catch((e) => {
           if (e.response && e.response.status == 404) {

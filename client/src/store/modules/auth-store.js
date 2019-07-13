@@ -1,26 +1,35 @@
 import LoginService from '../../services/login.service';
+import RegisterService from '../../services/register.service';
+import router from '../../router';
 
 
 // State
-const user = JSON.parse(localStorage.getItem('user'));
-const state = user ? { status: { loggedIn: true }, user } : { status: {}, user: null };
+// If we have a jwt token we are logged in
+const state = {
+    status: { loggedIn: !!JSON.parse(localStorage.getItem('jwt')) }
+}
 
 // Actions
 const actions = {
-    login({ dispatch, commit }, { username, password }) {
-        commit('LOGIN', { username });
-
-        LoginService.login(username, password)
-            .then(
-                user => {
-                    commit('LOGIN_SUCCESS', user);
-                    // router.push('/');
-                },
-                error => {
-                    commit('LOGIN_FAIL', error);
-                    dispatch('alert/error', error, { root: true });
-                }
-            );
+    register({ commit }, { firstName, lastName, email, password }) {
+        RegisterService.register(firstName, lastName, email, password)
+            .then(() => {
+                commit('LOGIN_SUCCESS');
+                router.push('/');
+            })
+            .catch(err => {
+                console.log(err.response);
+            })
+    },
+    login({ commit }, { email, password }) {
+        LoginService.login(email, password)
+            .then(() => {
+                commit('LOGIN_SUCCESS');
+                router.push('/');
+            })
+            .catch(err => {
+                console.log(err.response);
+            })
     },
     logout({ commit }) {
         LoginService.logout();
@@ -30,21 +39,11 @@ const actions = {
 
 // Mutations
 const mutations = {
-    LOGIN(state, user) {
-        state.status = { loggingIn: true };
-        state.user = user;
-    },
-    LOGIN_SUCCESS(state, user) {
+    LOGIN_SUCCESS(state) {
         state.status = { loggedIn: true };
-        state.user = user;
-    },
-    LOGIN_FAIL(state) {
-        state.status = {};
-        state.user = null;
     },
     LOGOUT(state) {
-        state.status = {};
-        state.user = null;
+        state.status = { loggedIn: false };
     }
 }
 
