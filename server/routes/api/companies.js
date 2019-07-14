@@ -30,22 +30,18 @@ router.route('/').post(async (req, res) => {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
         user = await User.findById(payload.userId);
         if (!user) {
-            return ResHelper.fail(res, { auth: 'Access denied: You need to be logged in to add a company' }, 403);
+            return ResHelper.fail(res, 'Access denied: You need to be logged in to add a company', 403);
         }
     } catch (err) {
-        return ResHelper.fail(res, { token: err.message });
+        return ResHelper.error(res, err);
     }
 
     // Input validation
-    const failData = {};
-    if (!name) { failData.name = ' Name is required' }
-    if (!address) { failData.address = 'Address is required' }
-    if (!city) { failData.city = 'City is required' }
-    if (!country) { failData.country = 'Country is required' }
-    if (!!email && !AuthHelper.validEmail(email)) { failData.email = 'Invalid email' }
-    if (Object.keys(failData).length) {
-        return ResHelper.fail(res, failData);
-    }
+    if (!name) { return ResHelper.fail(res, 'Name is required') }
+    if (!address) { return ResHelper.fail(res, 'Address is required') }
+    if (!city) { return ResHelper.fail(res, 'City is required') }
+    if (!country) { return ResHelper.fail(res, 'Country is required') }
+    if (!!email && !AuthHelper.validEmail(email)) { return ResHelper.fail(res, 'Invalid email') }
 
     // Creating company
     const newCompany = new Company({ name, address, city, country });
@@ -82,22 +78,18 @@ router.route('/:id').put(async (req, res) => {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
         const user = await User.findById(payload.userId);
         if (!user.companies[companyId] || !user.companiesPartner[companyId]) {
-            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner or a co-owner to change the company' }, 403);
+            return ResHelper.fail(res, 'Access denied: You need to be the owner or a co-owner to change the company', 403);
         }
     } catch (err) {
-        return ResHelper.fail(res, { token: err.message });
+        return ResHelper.error(res, err);
     }
 
 
     // Input validation
-    const failData = {};
-    if (!name && name !== undefined) { failData.name = ' Name is required' }
-    if (!address && address !== undefined) { failData.address = 'Address is required' }
-    if (!city && city !== undefined) { failData.city = 'City is required' }
-    if (!country && country !== undefined) { failData.country = 'Country is required' }
-    if (Object.keys(failData).length) {
-        return ResHelper.fail(res, failData);
-    }
+    if (!name && name !== undefined) {  return ResHelper.fail(res, 'Name is required') }
+    if (!address && address !== undefined) {  return ResHelper.fail(res, 'Address is required') }
+    if (!city && city !== undefined) {  return ResHelper.fail(res, 'City is required') }
+    if (!country && country !== undefined) { return ResHelper.fail(res, 'Country is required') }
 
     // Creating update
     const update = {};
@@ -122,10 +114,10 @@ router.route('/:id').delete(async (req, res) => {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
         const user = await User.findById(payload.userId);
         if (!user.companies[companyId] || !user.companiesPartner[companyId]) {
-            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner to delete a company' }, 403);
+            return ResHelper.fail(res, 'Access denied: You need to be the owner to delete a company', 403);
         }
     } catch (err) {
-        return ResHelper.fail(res, { token: err.message });
+        return ResHelper.error(res, err);
     }
 
     // Delete
@@ -145,22 +137,22 @@ router.route('/:id/invite').post(async (req, res) => {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
         const user = await User.findById(payload.userId);
         if (!user) {
-            return ResHelper.fail(res, { auth: 'Access denied: You need to be the owner to be able to add partners' }, 403);
+            return ResHelper.fail(res, 'Access denied: You need to be the owner to be able to add partners', 403);
         }
     } catch (err) {
-        return ResHelper.fail(res, { token: err.message });
+        return ResHelper.error(res, err);
     }
 
     // Input validation
     if (!!email && !AuthHelper.validEmail(email)) {
-        return ResHelper.fail(res, { email: 'Invalid email' });
+        return ResHelper.fail(res, 'Invalid email');
     }
 
     // Add
     User.find({ email })
         .then(user => {
             if (!user) {
-                ResHelper.fail(res, { email: 'No user found with that email' });
+                ResHelper.fail(res, 'No user found with that email');
             }
             user.companiesPartner[companyId] = true;
             user.save()

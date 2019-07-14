@@ -5,10 +5,10 @@ const success = (res, payload, status = 200) => {
     });
 }
 
-const fail = (res, payload, status = 400) => {
+const fail = (res, message, status = 400) => {
     res.status(status).json({
         "status": "fail",
-        data: payload
+        message
     });
 }
 

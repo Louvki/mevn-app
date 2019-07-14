@@ -8,20 +8,17 @@ router.route('/').post((req, res) => {
     const email = req.body.email ? req.body.email.toLowerCase() : undefined;
 
     // Validation
-    const failData = {};
-    if (!firstName) { failData.firstName = 'First name is required' }
-    if (!lastName) { failData.lastName = 'Last name is required' }
-    if (!email || !AuthHelper.validEmail(email)) { failData.email = 'Valid email is required' }
-    if (!password || !AuthHelper.validPassword(password)) { failData.password = 'Password must be at least 6 characters' }
-    if (Object.keys(failData).length) {
-        return ResHelper.fail(res, failData);
-    }
+    if (!firstName) { return ResHelper.fail(res, 'First Name is required') }
+    if (!lastName) { return ResHelper.fail(res, 'Last Name is required') }
+    if (!email || !AuthHelper.validEmail(email)) { return ResHelper.fail(res, 'Valid email is required') }
+    if (!password || !AuthHelper.validPassword(password)) { return ResHelper.fail(res, 'Passowrd must be at least 6 characters') }
 
-    User.find({email})
+
+    User.find({ email })
         .then(users => {
             // Check if email is taken
             if (users.length) {
-                return ResHelper.fail(res, { email: 'An account with this email already exists' })
+                return ResHelper.fail(res, 'An account with this email already exists')
             }
 
             // Save user

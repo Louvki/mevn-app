@@ -9,20 +9,20 @@ router.route('/').post((req, res) => {
 
 
     if (!email || !AuthHelper.validEmail(email)) {
-        return ResHelper.fail(res, { email: 'Please enter a valid email address' });
+        return ResHelper.fail(res, 'Please enter a valid email address');
     }
 
     User.findOne({ email })
         .then(user => {
             if (!user) {
-                return ResHelper.fail(res, { email: 'No user found with that email' });
+                return ResHelper.fail(res, 'No user found with that email');
             }
 
             if (user.isValidPassword(password)) {
                 const token = AuthHelper.createToken(user);
                 ResHelper.success(res, { message: 'Login successful!', token });
             } else {
-                ResHelper.fail(res, { message: 'Wrong password' });
+                ResHelper.fail(res, 'Wrong password');
             }
         })
         .catch(err => ResHelper.error(res, err))
