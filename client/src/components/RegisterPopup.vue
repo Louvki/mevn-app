@@ -1,4 +1,4 @@
-    <template>
+<template>
   <v-dialog max-width="600px" v-model="dialog">
     <v-btn flat slot="activator" class="success">Register</v-btn>
     <v-card>

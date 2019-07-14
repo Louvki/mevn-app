@@ -14,7 +14,6 @@
       <v-btn flat @click="saveCompany" class="success mx-3 mt-3" :loading="loading" :disabled="!loggedIn">{{company._id === 'new' ? 'Add' : 'Update' }}</v-btn>
       <v-btn flat @click="deleteCompany" class="error mx-3 mt-3" :loading="loading" :disabled="deleteDisabled || !loggedIn">Delete</v-btn>
     </div>
-
   </v-form>
 </template>
 
@@ -26,7 +25,7 @@ export default {
     company: {
       type: Object,
       required: true
-    },
+    }
   },
   data() {
     return {
@@ -41,7 +40,7 @@ export default {
       loggedIn: this.$store.state.auth.status.loggedIn,
       deleteDisabled: this.company._id === "new",
       loading: false,
-      errMessage: "",
+      errMessage: ""
     };
   },
   methods: {
@@ -74,9 +73,6 @@ export default {
           this.loading = false;
         });
     },
-    goBack() {
-      router.push("/");
-    }
   }
 };
 </script>

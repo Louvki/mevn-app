@@ -16,11 +16,8 @@
 export default {
   data() {
     return {
-      beneficialOwners: this.$store.state.company.beneficialOwners,
+      beneficialOwners: this.$store.state.company.beneficialOwners
     };
   }
 };
 </script>
-
-<style>
-</style>

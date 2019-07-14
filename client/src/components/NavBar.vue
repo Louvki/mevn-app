@@ -20,14 +20,13 @@ export default {
   components: { LoginPopup, RegisterPopup },
   methods: {
     logout() {
-      const { dispatch } = this.$store;
-      dispatch("auth/logout");
+      this.$store.dispatch("auth/logout");
     }
   },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    }
+  data() {
+    return {
+      loggedIn: this.$store.state.auth.status.loggedIn
+    };
   }
 };
 </script>

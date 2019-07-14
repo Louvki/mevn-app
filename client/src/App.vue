@@ -1,7 +1,6 @@
 <template>
-  <v-app class="grey lighten-4">
+  <v-app>
     <NavBar />
-
     <v-content class="mx-4 mb-4">
       <v-container>
         <v-layout row wrap>

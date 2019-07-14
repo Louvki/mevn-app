@@ -34,13 +34,14 @@ export default {
       if (this.companyId === "new") {
         return;
       }
+      
       if (this.$refs.form.validate()) {
         this.loading = true;
         const { email, companyId } = this;
         this.$store
           .dispatch("company/addBeneficialOwner", { email, id: companyId })
           .then(() => {
-          this.$refs.form.reset();
+            this.$refs.form.reset();
             this.errMessage = "User invited!";
             this.loading = false;
           })
