@@ -199,12 +199,6 @@ router.route('/:id/invite').post(async (req, res) => {
         if (!user) {
             return ResHelper.fail(res, 'Access denied: You need to be the owner to be able to add beneficial owners', 403);
         }
-        if (user.companies[companyId]) {
-            return ResHelper.fail(res, 'This user owns the company');
-        }
-        if (user.companiesBeneficial[companyId]) {
-            return ResHelper.fail(res, 'This user is aready a beneficial owner');
-        }
     } catch (err) {
         return ResHelper.error(res, err);
     }
@@ -228,6 +222,14 @@ router.route('/:id/invite').post(async (req, res) => {
             if (!user) {
                 return ResHelper.fail(res, 'No user found with that email');
             }
+            if (user.companies[companyId]) {
+                return ResHelper.fail(res, 'Invited user owns the company');
+            }
+            if (user.companiesBeneficial[companyId]) {
+                return ResHelper.fail(res, 'Invited user is aready a beneficial owner');
+            }
+
+
             user.companiesBeneficial[companyId] = true;
             user.updateOne(user)
                 .then(() => ResHelper.success(res, { message: 'Beneficial owner added' }))
