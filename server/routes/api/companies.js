@@ -21,7 +21,7 @@ router.route('/:id').get((req, res) => {
 
 // Add company
 router.route('/').post(async (req, res) => {
-    const { name, address, city, country, phoneNumber, } = req.body;
+    const { name, address, city, country, phone, } = req.body;
     const email = req.body.email ? req.body.email.toLowerCase() : undefined;
     let user;
 
@@ -46,7 +46,7 @@ router.route('/').post(async (req, res) => {
     // Creating company
     const newCompany = new Company({ name, address, city, country });
     if (email) { newCompany.email = email; }
-    if (phoneNumber) { newCompany.phoneNumber = phoneNumber; }
+    if (phone) { newCompany.phone = phone; }
 
     // Save with transaction
     const session = await mongoose.startSession()
@@ -70,7 +70,7 @@ router.route('/').post(async (req, res) => {
 
 // Update company
 router.route('/:id').put(async (req, res) => {
-    const { name, address, city, country, email, phoneNumber } = req.body;
+    const { name, address, city, country, email, phone } = req.body;
     const companyId = req.params.id;
 
     // Role validation
@@ -98,7 +98,7 @@ router.route('/:id').put(async (req, res) => {
     if (city) { update.city = city; }
     if (country) { update.country = country; }
     if (email) { update.email = email; }
-    if (phoneNumber) { update.phoneNumber = phoneNumber; }
+    if (phone) { update.phone = phone; }
 
     // Update
     Company.findByIdAndUpdate(companyId, update)
