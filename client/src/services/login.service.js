@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'api/login';
+const url = '/api/login';
 
 class LoginService {
 

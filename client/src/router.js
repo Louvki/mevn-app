@@ -23,7 +23,7 @@ const router = new Router({
       beforeEnter(to, from, next) {
         const companyId = to.params.id;
         if (companyId === 'new') {
-          to.params.company = {};
+          to.params.company = { _id: 'new', name: '', address: '', city: '', country: '', email: '', phone: '' };
           next();
         } else {
           store.dispatch('company/getCompany', to.params.id).then((company) => {

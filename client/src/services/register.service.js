@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'api/register';
+const url = '/api/register';
 
 class RegisterService {
     static async register(firstName, lastName, email, password) {

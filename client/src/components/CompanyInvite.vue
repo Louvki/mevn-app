@@ -1,5 +1,5 @@
 <template>
-    <v-form v-if="tab === ą" class="px-3" ref="inviteForm">
+    <v-form class="px-3" ref="inviteForm">
       <v-spacer></v-spacer>
       <span>{{errMessage}}</span>
       <v-spacer></v-spacer>
@@ -14,7 +14,7 @@ export default {
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
-        v => /.+@.+/.test(v) || "E-mail must be valid"
+        v => /[^@]+@[^\.]+\..+/.test(v) || "E-mail must be valid"
       ],
       errMessage: "",
       loading: false,

@@ -3,12 +3,16 @@ const { JWT_SECRET } = require('../config/config');
 
 const createToken = (user) => {
     // Tokens are valid for one day
-    return JWT.sign({ userid: user.id }, JWT_SECRET, { expiresIn: '24h' })
+    return JWT.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '24h' })
 }
 
 const verifyToken = (token) => {
     return JWT.verify(token, JWT_SECRET);
 }
+
+const decodeToken = (token) => {
+    return JWT.decode(token, {complete: true});
+ }
 
 const validEmail = (email) => {
     const emailRegex = /[^@]+@[^\.]+\..+/;
@@ -20,4 +24,4 @@ const validPassword = (password) => {
     return passwordRegex.test(password);
 }
 
-module.exports = { createToken, verifyToken, validEmail, validPassword }
+module.exports = { createToken, verifyToken, decodeToken, validEmail, validPassword }

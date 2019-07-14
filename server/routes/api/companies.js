@@ -19,7 +19,7 @@ router.route('/:id').get((req, res) => {
         .catch(err => ResHelper.error(res, err))
 })
 
-// Add company
+// Create company
 router.route('/').post(async (req, res) => {
     const { name, address, city, country, phone, } = req.body;
     const email = req.body.email ? req.body.email.toLowerCase() : undefined;

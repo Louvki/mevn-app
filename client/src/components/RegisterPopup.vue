@@ -2,9 +2,6 @@
   <v-dialog max-width="600px" v-model="dialog">
     <v-btn flat slot="activator" class="success">Register</v-btn>
     <v-card>
-      <v-card-title>
-        <h2>Register</h2>
-      </v-card-title>
       <v-card-text>
         <v-form class="px-3" ref="form">
           <v-text-field v-model="firstName" label="First name" :rules="nameRules"></v-text-field>
@@ -14,7 +11,7 @@
           <v-spacer></v-spacer>
           <span>{{errMessage}}</span>
           <v-spacer></v-spacer>
-          <v-btn flat @click="submit" class="success mx-0 mt-3" :loading="loading">Submit</v-btn>
+          <v-btn flat @click="submit" class="success mx-0 mt-3" :loading="loading">Register</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -31,10 +28,13 @@ export default {
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
-        v => /.+@.+/.test(v) || "E-mail must be valid"
+        v => /[^@]+@[^\.]+\..+/.test(v) || "E-mail must be valid",
       ],
       password: "",
-      passwordRules: [v => !!v || "Password is required"],
+      passwordRules: [
+        v => !!v || "Password is required.",
+        v => v && v.length >= 6 || "Min 6 characters"
+      ],
       errMessage: "",
       loading: false,
       dialog: false
@@ -44,6 +44,7 @@ export default {
     dialog(val) {
       if (!val) {
         this.$refs.form.reset();
+        this.loading = false;
         this.errMessage = "";
       }
     }
@@ -52,7 +53,9 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        const { firstName, lastName, email, password } = this.this.$store
+        const { firstName, lastName, email, password } = this;
+
+        this.$store
           .dispatch("auth/register", { firstName, lastName, email, password })
           .then(() => {
             this.dialog = false;

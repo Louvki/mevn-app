@@ -2,9 +2,6 @@
   <v-dialog max-width="600px" v-model="dialog">
     <v-btn flat slot="activator" class="success">Login</v-btn>
     <v-card>
-      <v-card-title>
-        <h2>Login</h2>
-      </v-card-title>
       <v-card-text>
         <v-form class="px-3" ref="form">
           <v-text-field v-model="email" label="E-mail" prepend-icon="email" :rules="emailRules"></v-text-field>
@@ -12,7 +9,7 @@
           <v-spacer></v-spacer>
           <span>{{errMessage}}</span>
           <v-spacer></v-spacer>
-          <v-btn flat @click="submit" class="success mx-0 mt-3" :loading="loading">Submit</v-btn>
+          <v-btn flat @click="submit" class="success mx-0 mt-3" :loading="loading">Log in</v-btn>
         </v-form>
       </v-card-text>
     </v-card>

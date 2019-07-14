@@ -1,5 +1,6 @@
 <template>
-  <v-toolbar flat app>
+  <v-toolbar app flat>
+    <v-spacer></v-spacer>
     <LoginPopup v-if="!loggedIn" />
     <RegisterPopup v-if="!loggedIn" />
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'api/companies/';
+const url = '/api/companies/';
 
 class CompanyService {
     // Get Companies
@@ -17,22 +17,22 @@ class CompanyService {
 
     // Create Company
     static async createCompany(company) {
-        const jwt = localStorage.getItem('jwt');
-        const newCompany = await axios.post(url, company, { headers: { Authorization: 'Bearer ' + jwt } })
+        const jwt = JSON.parse(localStorage.getItem('jwt'));
+        const newCompany = await axios.post(url, company, { headers: { Authorization: jwt } })
         return newCompany;
     }
 
     // Update Company
     static async updateCompany(partialCompany, id) {
-        const jwt = localStorage.getItem('jwt');
-        const companyId = await axios.put(url + id, partialCompany, { headers: { Authorization: 'Bearer ' + jwt } })
+        const jwt = JSON.parse(localStorage.getItem('jwt'));
+        const companyId = await axios.put(url + id, partialCompany, { headers: { Authorization: jwt } })
         return companyId;
     }
 
     // Delete Company
     static async deleteCompany(id) {
-        const jwt = localStorage.getItem('jwt');
-        const companyId = await axios.delete(url + id, { headers: { Authorization: 'Bearer ' + jwt } })
+        const jwt = JSON.parse(localStorage.getItem('jwt'));
+        const companyId = await axios.delete(url + id, { headers: { Authorization: jwt } })
         return companyId;
     }
 }

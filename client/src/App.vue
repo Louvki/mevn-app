@@ -3,7 +3,7 @@
     <NavBar />
 
     <v-content class="mx-4 mb-4">
-      <v-container grid-list-md text-xs-center>
+      <v-container>
         <v-layout row wrap>
           <v-flex xs12>
             <router-view></router-view>
