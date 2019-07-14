@@ -28,12 +28,13 @@ export default {
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
-        v => /[^@]+@[^\.]+\..+/.test(v) || "E-mail must be valid",
+        // eslint-disable-next-line
+        v => /[^@]+@[^\.]+\..+/.test(v) || "E-mail must be valid"
       ],
       password: "",
       passwordRules: [
         v => !!v || "Password is required.",
-        v => v && v.length >= 6 || "Min 6 characters"
+        v => (v && v.length >= 6) || "Min 6 characters"
       ],
       errMessage: "",
       loading: false,

@@ -54,7 +54,8 @@ router.route('/').post(async (req, res) => {
     try {
         const company = await newCompany.save();
         user.companies[company.id] = true;
-        await user.save();
+
+        await user.update(user);
         await session.commitTransaction();
         await session.endSession();
         ResHelper.success(res, company)
@@ -70,14 +71,13 @@ router.route('/').post(async (req, res) => {
 
 // Update company
 router.route('/:id').put(async (req, res) => {
-    const { name, address, city, country, email, phone } = req.body;
-    const companyId = req.params.id;
+    const { name, address, city, country, email, phone, _id } = req.body.company;
 
     // Role validation
     try {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
         const user = await User.findById(payload.userId);
-        if (!user.companies[companyId] || !user.companiesPartner[companyId]) {
+        if (!(user.companies[companyId] || user.companiesBeneficial[companyId])) {
             return ResHelper.fail(res, 'Access denied: You need to be the owner or a co-owner to change the company', 403);
         }
     } catch (err) {
@@ -86,9 +86,9 @@ router.route('/:id').put(async (req, res) => {
 
 
     // Input validation
-    if (!name && name !== undefined) {  return ResHelper.fail(res, 'Name is required') }
-    if (!address && address !== undefined) {  return ResHelper.fail(res, 'Address is required') }
-    if (!city && city !== undefined) {  return ResHelper.fail(res, 'City is required') }
+    if (!name && name !== undefined) { return ResHelper.fail(res, 'Name is required') }
+    if (!address && address !== undefined) { return ResHelper.fail(res, 'Address is required') }
+    if (!city && city !== undefined) { return ResHelper.fail(res, 'City is required') }
     if (!country && country !== undefined) { return ResHelper.fail(res, 'Country is required') }
 
     // Creating update
@@ -108,12 +108,13 @@ router.route('/:id').put(async (req, res) => {
 
 // Delete company
 router.route('/:id').delete(async (req, res) => {
+    const companyId = req.params.id;
 
     // Role validation
     try {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
         const user = await User.findById(payload.userId);
-        if (!user.companies[companyId] || !user.companiesPartner[companyId]) {
+        if (!user.companies[companyId]) {
             return ResHelper.fail(res, 'Access denied: You need to be the owner to delete a company', 403);
         }
     } catch (err) {
@@ -126,8 +127,25 @@ router.route('/:id').delete(async (req, res) => {
         .catch(err => ResHelper.error(res, err))
 })
 
+// Get beneficial owners
+router.route('/:id/invite').get(async (req, res) => {
+    const companyId = req.params.id
+    const key = 'companiesBeneficial.' + companyId;
+    const query = {};
+    query[key] = true;
 
-// Add partner(Beneficial owner)
+
+    User.find(query)
+        .then(users => {
+            const beneficialOwners = users.map(x => {
+                return { firstName: x.firstName, lastName: x.lastName }
+            })
+            return ResHelper.success(res, beneficialOwners)
+        })
+        .catch(err => ResHelper.error(res, err));
+})
+
+// Add beneficial owner
 router.route('/:id/invite').post(async (req, res) => {
     const email = req.body.email ? req.body.email.toLowerCase() : undefined;
     const companyId = req.params.id;
@@ -137,31 +155,44 @@ router.route('/:id/invite').post(async (req, res) => {
         const payload = await AuthHelper.verifyToken(req.headers.authorization);
         const user = await User.findById(payload.userId);
         if (!user) {
-            return ResHelper.fail(res, 'Access denied: You need to be the owner to be able to add partners', 403);
+            return ResHelper.fail(res, 'Access denied: You need to be the owner to be able to add beneficial owners', 403);
+        }
+        if (user.companies[companyId]) {
+            return ResHelper.fail(res, 'This user owns the company');
+        }
+        if (user.companiesBeneficial[companyId]) {
+            return ResHelper.fail(res, 'This user is aready a beneficial owner');
         }
     } catch (err) {
         return ResHelper.error(res, err);
     }
 
     // Input validation
-    if (!!email && !AuthHelper.validEmail(email)) {
+    if (!email || !AuthHelper.validEmail(email)) {
         return ResHelper.fail(res, 'Invalid email');
+    }
+    try {
+        const company = await Company.findById(companyId);
+        if (!company) {
+            return ResHelper.fail(res, 'The company you requested does not exist', 404);
+        }
+    } catch (err) {
+        return ResHelper.error(res, err);
     }
 
     // Add
-    User.find({ email })
+    User.findOne({ email })
         .then(user => {
             if (!user) {
-                ResHelper.fail(res, 'No user found with that email');
+                return ResHelper.fail(res, 'No user found with that email');
             }
-            user.companiesPartner[companyId] = true;
-            user.save()
-                .then(() => ResHelper.success(res, { message: 'Partner added' }))
+            user.companiesBeneficial[companyId] = true;
+            user.updateOne(user)
+                .then(() => ResHelper.success(res, { message: 'Beneficial owner added' }))
                 .catch((err => ResHelper.error(res, err)))
 
         })
         .catch(err => ResHelper.error(res, err))
 })
-
 
 module.exports = router;

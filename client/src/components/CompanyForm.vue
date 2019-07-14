@@ -7,13 +7,12 @@
     <v-text-field v-model="company.email" label="E-mail" :rules="emailRules"></v-text-field>
     <v-text-field v-model="company.phone" label="Phone"></v-text-field>
     <v-spacer></v-spacer>
-    <span>{{errMessage}}</span>
-    <v-spacer></v-spacer>
 
     <div class="button-group">
+      <p>{{errMessage}}</p>
       <p v-if="!loggedIn">You need to be logged in to edit the company</p>
-      <v-btn flat @click="submit" class="success mx-3 mt-3" :loading="loading" :disabled="!loggedIn">{{company._id === 'new' ? 'Add' : 'Update' }}</v-btn>
-      <v-btn flat @click="submit" class="error mx-3 mt-3" :loading="loading" :disabled="deleteDisabled || !loggedIn">Delete</v-btn>
+      <v-btn flat @click="saveCompany" class="success mx-3 mt-3" :loading="loading" :disabled="!loggedIn">{{company._id === 'new' ? 'Add' : 'Update' }}</v-btn>
+      <v-btn flat @click="deleteCompany" class="error mx-3 mt-3" :loading="loading" :disabled="deleteDisabled || !loggedIn">Delete</v-btn>
     </div>
 
   </v-form>
@@ -27,7 +26,7 @@ export default {
     company: {
       type: Object,
       required: true
-    }
+    },
   },
   data() {
     return {
@@ -41,12 +40,12 @@ export default {
       ],
       loggedIn: this.$store.state.auth.status.loggedIn,
       deleteDisabled: this.company._id === "new",
+      loading: false,
       errMessage: "",
-      loading: false
     };
   },
   methods: {
-    submit() {
+    saveCompany() {
       if (this.$refs.form.validate()) {
         this.loading = true;
         this.$store
@@ -54,7 +53,7 @@ export default {
           .then(() => {
             this.loading = false;
             this.errMessage = "";
-            this.router.push("/");
+            router.push("/");
           })
           .catch(err => {
             this.errMessage = err.message;
@@ -62,13 +61,13 @@ export default {
           });
       }
     },
-    delete() {
+    deleteCompany() {
       this.$store
         .dispatch("company/deleteCompany", this.company._id)
-        .then(wat => {
+        .then(() => {
           this.loading = false;
           this.errMessage = "";
-          this.router.push("/");
+          router.push("/");
         })
         .catch(err => {
           this.errMessage = err.message;

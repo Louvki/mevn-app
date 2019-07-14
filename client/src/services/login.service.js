@@ -3,8 +3,7 @@ import axios from 'axios';
 const url = '/api/login';
 
 class LoginService {
-
-    // Gets token, puts in local storage
+    // Gets token, stores in local storage
     static async login(email, password) {
             const res = await axios.post(url, { email, password })
             const token = res.data.data.token;

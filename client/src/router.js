@@ -29,12 +29,8 @@ const router = new Router({
           store.dispatch('company/getCompany', to.params.id).then((company) => {
             to.params.company = company
             next();
-          }).catch((e) => {
-            if (e.response && e.response.status == 404) {
-              next({ name: '404', params: { resource: 'company' } });
-            } else {
-              next({ name: 'network-issue' });
-            }
+          }).catch(() => {
+            next({ name: '404', params: { resource: 'company' } });
           });
         }
       },

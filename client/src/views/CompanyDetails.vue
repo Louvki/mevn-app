@@ -1,38 +1,46 @@
 <template>
   <div>
-    <h1>{{company.name ? company.name : 'Add company'}}
+    <!-- Title -->
+    <h1>
       <router-link :to="{ name: 'company-list' }">
         <v-btn class="info">
           <v-icon>arrow_back</v-icon>
         </v-btn>
       </router-link>
+      {{company.name ? company.name : 'Add company'}}
     </h1>
     <br>
+    <!-- Tabs -->
     <v-tabs v-model="tab" grow>
       <v-tabs-slider></v-tabs-slider>
-      <v-tab>
-        Details
-      </v-tab>
-      <v-tab>
-        Beneficial owners
-      </v-tab>
+      <v-tab>Details</v-tab>
+      <v-tab>Beneficial owners</v-tab>
     </v-tabs>
+    <!-- Form -->
     <v-card>
       <br>
       <CompanyForm v-if="tab === 0" v-bind:company="company" />
-      <CompanyInvite v-if="tab === 1" />
+      <CompanyInvite v-if="tab === 1" v-bind:companyId="company._id" />
     </v-card>
+
+    <BeneficialOwnerList v-if="tab === 1" />
+
   </div>
 </template>
 
 <script>
 import CompanyForm from "../components/CompanyForm";
 import CompanyInvite from "../components/CompanyInvite";
+import BeneficialOwnerList from "../components/BeneficialOwnerList";
 
 export default {
+  created() {
+    this.$store.dispatch("company/getBeneficialOwners", this.company._id);
+  },
   components: {
     CompanyForm,
-    CompanyInvite
+    CompanyInvite,
+    BeneficialOwnerList
   },
   props: {
     company: {
@@ -42,58 +50,8 @@ export default {
   },
   data() {
     return {
-      tab: null,
-      direction: "top",
-      fab: true,
-      fling: false,
-      hover: false,
-      tabs: null,
-      top: false,
-      right: true,
-      bottom: true,
-      left: false,
-      transition: "slide-y-reverse-transition"
+      tab: null
     };
-  },
-
-  computed: {
-    activeFab() {
-      switch (this.tabs) {
-        case "one":
-          return { class: "purple", icon: "account_circle" };
-        case "two":
-          return { class: "red", icon: "edit" };
-        case "three":
-          return { class: "green", icon: "keyboard_arrow_up" };
-        default:
-          return {};
-      }
-    }
-  },
-
-  watch: {
-    top(val) {
-      this.bottom = !val;
-    },
-    right(val) {
-      this.left = !val;
-    },
-    bottom(val) {
-      this.top = !val;
-    },
-    left(val) {
-      this.right = !val;
-    }
   }
 };
 </script>
-
-<style scoped>
-#create .v-speed-dial {
-  position: absolute;
-}
-
-#create .v-btn--floating {
-  position: relative;
-}
-</style>

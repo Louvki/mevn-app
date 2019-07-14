@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
         type: Object,
         default: {},
     },
-    companiesPartner: {
+    companiesBeneficial: {
         type: Object,
         default: {},
     }

@@ -3,6 +3,7 @@ import CompanyService from '../../services/company.service';
 const state = {
   companies: [],
   company: {},
+  beneficialOwners: [],
 };
 
 const actions = {
@@ -17,34 +18,45 @@ const actions = {
     commit('SET_COMPANY', company);
     return company
   },
-  async saveCompany({ commit }, company) {
+  async saveCompany({ }, company) {
     if (!this.state.auth.status.loggedIn) { throw new Error('You need to be logged in to create a company') }
 
     try {
       if (company._id === 'new') {
-        const newCompany = await CompanyService.createCompany(company)
-        commit('ADD_COMPANY', newCompany);
+        CompanyService.createCompany(company)
       } else {
         await CompanyService.updateCompany(company)
       }
     } catch (err) {
-      throw new Error(err.response.data.message)
+      throw new Error(err.response ? err.response.data.message : err.message)
     }
   },
-  async deleteCompany({ commit }, companyId) {
+  async deleteCompany({ }, companyId) {
     if (!this.state.auth.status.loggedIn) { throw new Error('You need to be logged in to delete a company') }
-
+    if (companyId === 'new') { return; }
     try {
-      if (company._id === 'new') {
-        const newCompany = await CompanyService.createCompany(company)
-        commit('ADD_COMPANY', newCompany);
-      } else {
-        await CompanyService.updateCompany(company)
-      }
+      await CompanyService.deleteCompany(companyId)
     } catch (err) {
-      throw new Error(err.response.data.message)
+      throw new Error(err.response ? err.response.data.message : err.message)
     }
   },
+  async addBeneficialOwner({ }, { email, id }) {
+    if (!this.state.auth.status.loggedIn) { throw new Error('You need to be logged in to add beneficial owners') }
+    try {
+      await CompanyService.addBeneficialOwner(email, id);
+      CompanyService.getBeneficialOwners(id);
+    } catch (err) {
+      throw new Error(err.response ? err.response.data.message : err.message)
+    }
+  },
+  async getBeneficialOwners({ commit }, id) {
+    try {
+      const owners = await CompanyService.getBeneficialOwners(id)
+      commit('SET_BENEFICIAL_OWNERS', owners);
+    } catch (err) {
+      throw new Error(err.response ? err.response.data.message : err.message)
+    }
+  }
 };
 
 const mutations = {
@@ -54,8 +66,8 @@ const mutations = {
   SET_COMPANY(state, company) {
     state.company = company;
   },
-  ADD_COMPANY(state, company) {
-    state.companies.push(company);
+  SET_BENEFICIAL_OWNERS(state, beneficialOwners) {
+    state.beneficialOwners = beneficialOwners;
   },
 };
 
