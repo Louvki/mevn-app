@@ -20,20 +20,19 @@ const router = new Router({
       name: 'company-details',
       component: CompanyDetails,
       props: true,
-      beforeEnter(to, from, next) {
-        const companyId = to.params.id;
-        if (companyId === 'new') {
-          to.params.company = { _id: 'new', name: '', address: '', city: '', country: '', email: '', phone: '' };
+      async beforeEnter(to, from, next) {
+        try {
+          const companyId = to.params.id;
+          const company = companyId === 'new'
+            ? await store.dispatch('company/getNewCompany')
+            : await store.dispatch('company/getCompany', to.params.id)
+
+          to.params.company = company;
           next();
-        } else {
-          store.dispatch('company/getCompany', to.params.id).then((company) => {
-            to.params.company = company
-            next();
-          }).catch(() => {
-            next({ name: '404', params: { resource: 'company' } });
-          });
+        } catch {
+          next({ name: '404', params: { resource: 'company' } });
         }
-      },
+      }
     },
     {
       path: '/404',

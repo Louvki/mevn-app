@@ -61,6 +61,7 @@ export default {
       }
     },
     deleteCompany() {
+      this.loading = true;
       this.$store
         .dispatch("company/deleteCompany", this.company._id)
         .then(() => {
@@ -72,7 +73,7 @@ export default {
           this.errMessage = err.message;
           this.loading = false;
         });
-    },
+    }
   }
 };
 </script>

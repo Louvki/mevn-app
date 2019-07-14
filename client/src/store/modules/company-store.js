@@ -30,8 +30,14 @@ const actions = {
     }
   },
 
+  getNewCompany({ commit }) {
+      const company = { _id: 'new', name: '', address: '', city: '', country: '', email: '', phone: '' };
+      commit('SET_COMPANY', company);
+      return company
+  },
+
   // Save company. Depending on the company id either updates or creates a company.
-  async saveCompany({ }, company) {
+  async saveCompany({ dispatch }, company) {
     if (!this.state.auth.status.loggedIn) { throw new Error('You need to be logged in to create a company') }
     if (!company) { throw new Error('Company required') }
 
@@ -39,7 +45,7 @@ const actions = {
       company._id === 'new'
         ? await CompanyService.createCompany(company)
         : await CompanyService.updateCompany(company)
-      this.getCompanies();
+      dispatch('getCompanies');
     } catch (err) {
       throw new Error(err.response ? err.response.data.message : err.message)
     }
@@ -59,14 +65,14 @@ const actions = {
   },
 
   // Add beneficial owner
-  async addBeneficialOwner({ }, { email, id: companyId }) {
+  async addBeneficialOwner({ dispatch }, { email, id: companyId }) {
     if (!this.state.auth.status.loggedIn) { throw new Error('You need to be logged in to add beneficial owners') }
     if (!email) { throw new Error('Email required') }
     if (!companyId) { throw new Error('Company ID required') }
 
     try {
       await CompanyService.addBeneficialOwner(email, companyId);
-      CompanyService.getBeneficialOwners(companyId);
+      dispatch('getBeneficialOwners', companyId);
     } catch (err) {
       throw new Error(err.response ? err.response.data.message : err.message)
     }

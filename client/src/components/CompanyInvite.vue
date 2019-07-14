@@ -23,18 +23,24 @@ export default {
         // eslint-disable-next-line
         v => /[^@]+@[^\.]+\..+/.test(v) || "E-mail must be valid"
       ],
-      loggedIn: this.$store.state.auth.status.loggedIn,
-      companyId: this.$store.state.company.company._id,
       errMessage: "",
       loading: false
     };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+    companyId() {
+      return this.$store.state.company.company._id;
+    }
   },
   methods: {
     addBeneficialOwner() {
       if (this.companyId === "new") {
         return;
       }
-      
+
       if (this.$refs.form.validate()) {
         this.loading = true;
         const { email, companyId } = this;
