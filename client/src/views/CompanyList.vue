@@ -32,12 +32,10 @@ export default {
   created() {
     this.$store.dispatch("company/getCompanies");
   },
-  data() {
-    return {
-      companies: this.$store.state.company.companies
-    };
-  }
+  computed: {
+    companies() {
+      return this.$store.state.company.companies
+    }
+  },
 };
 </script>
-
-

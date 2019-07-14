@@ -14,10 +14,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      beneficialOwners: this.$store.state.company.beneficialOwners
-    };
-  }
+  computed: {
+    beneficialOwners() {
+      return this.$store.state.company.beneficialOwners
+    }
+  },
 };
 </script>

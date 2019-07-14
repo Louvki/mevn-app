@@ -23,10 +23,10 @@ export default {
       this.$store.dispatch("auth/logout");
     }
   },
-  data() {
-    return {
-      loggedIn: this.$store.state.auth.status.loggedIn
-    };
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
   }
 };
 </script>
