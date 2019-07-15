@@ -1,7 +1,7 @@
 {
   "name": "fullstack-vue-express",
   "version": "1.0.0",
-  "description": "Full stack application using vue for the client and nodejs/express for the server side.",
+  "description": "Full stack application using vue.js for the client side and nodejs/express for the server side.",
   "main": "server.js",
   "scripts": {
     "start": "node server/server.js",
