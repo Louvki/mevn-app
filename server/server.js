@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const { ATLAS_URI } = require('./config/config');
+require('dotenv').config()
 
-const isDev = process.env.NODE_ENV !== 'production';
-const port = process.env.PORT || 5000;
+const { NODE_ENV, PORT, ATLAS_URI } = process.env;
+const isDev = NODE_ENV !== 'production';
+const port = PORT || 5000;
 
 // Set up Mongoose
 mongoose.connect(ATLAS_URI, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });

@@ -1,8 +1,7 @@
 const JWT = require('jsonwebtoken');
-const { JWT_SECRET } = require('../config/config');
+const { JWT_SECRET } = process.env
 
 const createToken = (user) => {
-    // Tokens are valid for one day
     return JWT.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '24h' })
 }
 
@@ -11,8 +10,8 @@ const verifyToken = (token) => {
 }
 
 const decodeToken = (token) => {
-    return JWT.decode(token, {complete: true});
- }
+    return JWT.decode(token, { complete: true });
+}
 
 const validEmail = (email) => {
     const emailRegex = /[^@]+@[^\.]+\..+/;
