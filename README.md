@@ -73,3 +73,7 @@ Docker can take up some space quickly, and when errors happen, you sometimes get
 - **Remove all containers** - `docker rm $(docker ps -aq)`
 - **Remove all hanging images** - `docker rmi $(docker images -q -f "dangling=true")`
 - **Remove all hanging volumes** - `docker volume rm $(docker volume ls -qf "dangling=true")`
+
+
+# Disclaimer
+The implementation of authentication with JWT is very basic and insecure. Use at your own risk. More info on how to implement JWT securely: https://www.youtube.com/watch?v=2PPSXonhIck&ab_channel=CodeRealm
