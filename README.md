@@ -1,5 +1,6 @@
-# Mevn-app
-Basic application made using MEVN (MongoDB/Express/Vue/Node.js) stack. Containarized using Docker. 
+# MEVN-app
+Application made using MEVN (MongoDB Cloud/Express/Vue/Node.js) stack. Containarized using Docker. 
+
 The application allows to register and login using email / password. Users are authenticated using JWT tokens. Logged in users can create/update/delete companies and invite other users by using their email.
 
 # Live demo 
@@ -7,7 +8,7 @@ https://corporate-moon.herokuapp.com/
 
 # Getting started
 ## Setup
-Before you can use the app you are required to create .env file in the root of the server directory. It needs to contain a secret for your JWT tokens and a connection string to your Mongo database.
+Before you can use the app you are required to create .env file in the root of the server directory. It needs to contain a secret for your JWT tokens and a connection string to your Mongo cloud database.
 ```
 JWT_SECRET=yourjwtsecret
 ATLAS_URI=mongoDbConnectionString
@@ -26,7 +27,7 @@ To stop the containers run ```docker-compose -f docker-compose.dev.yml down```
 
 
 ---DISCLAIMER FOR WINDOWS---
-Change port-forward settings in Virtualbox (https://www.jhipster.tech/tips/020_tip_using_docker_containers_as_localhost_on_mac_and_windows.html)
+[Change port-forward settings in Virtualbox] (https://www.jhipster.tech/tips/020_tip_using_docker_containers_as_localhost_on_mac_and_windows.html)
 Alternatively you can also edit the dev server url inside of client/vue.config.js. You need to change the target url to the ip address of your docker machine. You can access it running the command ```docker-machine ip```
 
 ## Development locally
