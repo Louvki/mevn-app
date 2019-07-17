@@ -26,7 +26,9 @@ This should spin up a development server for client side on http://localhost:808
 To stop the containers run ```docker-compose -f docker-compose.dev.yml down```
 
 
+
 ---DISCLAIMER FOR WINDOWS---
+
 [Change port-forward settings in Virtualbox](https://www.jhipster.tech/tips/020_tip_using_docker_containers_as_localhost_on_mac_and_windows.html)
 Alternatively you can also edit the dev server url inside of client/vue.config.js. You need to change the target url to the ip address of your docker machine. You can access it running the command ```docker-machine ip```
 
