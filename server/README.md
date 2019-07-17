@@ -1,35 +1,35 @@
 # Depenedencies
-    "bcrypt": "^3.0.6",
-    "cors": "^2.8.5",
-    "dotenv": "^8.0.0",
+    "bcrypt": "^3.0.6",         ---- Used for hashing and salting passwords before storing them in the database
+    "cors": "^2.8.5",           ---- Middleware for enabling cross origin resource sharing
+    "dotenv": "^8.0.0",         ---- Loads environment variables from a .env file into process.env
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^8.5.1",   ---- Implementation of json web tokens
     "mongodb": "^3.2.7",
     "mongoose": "^5.6.4",
-    "nodemon": "^1.19.1",
+    "nodemon": "^1.19.1",       ---- Auto restarting development server
     "npm": "^6.10.0"
 
 
 # Project structure
     - helpers
-      - AuthHelper.js   ---- Functions related to the JWT and email and password validity
-      - ResHelper.js    ---- Functions for making uniform responses
+      - AuthHelper.js           ---- Functions related to the JWT and email and password validity
+      - ResHelper.js            ---- Functions for making uniform responses
     - models
-      - Company.js      ---- Mongoose schema of the company.
-      - User.js         ---- Mongoose schema of the user. Contains password hashing functions
+      - Company.js              ---- Mongoose schema of the company.
+      - User.js                 ---- Mongoose schema of the user. Contains password hashing functions
     - routes 
       - api
-        - companies.js  ---- Contains all the endpoints related to companies.
-        - login.js      ---- Endpoint for logging in
-        - register.js   ---- Endpoint for registering
+        - companies.js          ---- Contains all the endpoints related to companies.
+        - login.js              ---- Endpoint for logging in
+        - register.js           ---- Endpoint for registering
     - .dockerignore
     - .gitignore
-    - .env              ---- Environment variable file
-    - Dockerfile        ---- Docker configuration
+    - .env                      ---- Environment variable file
+    - Dockerfile                ---- Docker configuration
     - README.md
     - package-lock.json
     - package.json     
-    - server.js         ---- Entry point to the application
+    - server.js                 ---- Entry point to the application
 
 
 # Queries
