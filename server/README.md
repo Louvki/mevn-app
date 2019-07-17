@@ -28,7 +28,7 @@
     - Dockerfile        ---- Docker configuration
     - README.md
     - package-lock.json
-    - package.json      ---- Dependency manager
+    - package.json     
     - server.js         ---- Entry point to the application
 
 
