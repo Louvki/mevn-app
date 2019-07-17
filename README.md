@@ -76,4 +76,7 @@ Docker can take up some space quickly, and when errors happen, you sometimes get
 
 
 # Disclaimer
-The implementation of authentication with JWT is very basic and insecure. Use at your own risk. More info on how to implement JWT securely: https://www.youtube.com/watch?v=2PPSXonhIck&ab_channel=CodeRealm
+The implementation of authentication with JWT is very basic and insecure. Use at your own risk. More info on how to implement JWT securely:
+- https://jwt.io/
+- https://www.pingidentity.com/en/company/blog/posts/2019/jwt-security-nobody-talks-about.html
+- https://www.youtube.com/watch?v=2PPSXonhIck&ab_channel=CodeRealm
