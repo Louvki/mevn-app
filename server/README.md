@@ -11,25 +11,25 @@
 
 
 # Project structure
-- helpers
-  - AuthHelper.js   ---- Functions related to the JWT and email and password validity
-  - ResHelper.js    ---- Functions for making uniform responses
-- models
-  - Company.js      ---- Mongoose schema of the company.
-  - User.js         ---- Mongoose schema of the user. Contains password hashing functions
-- routes 
-  - api
-    - companies.js  ---- Contains all the endpoints related to companies.
-    - login.js      ---- Endpoint for logging in
-    - register.js   ---- Endpoint for registering
-- .dockerignore
-- .gitignore
-- .env              ---- Environment variable file
-- Dockerfile        ---- Docker configuration
-- README.md
-- package-lock.json
-- package.json      ---- Dependency manager
-- server.js         ---- Entry point to the application
+    - helpers
+      - AuthHelper.js   ---- Functions related to the JWT and email and password validity
+      - ResHelper.js    ---- Functions for making uniform responses
+    - models
+      - Company.js      ---- Mongoose schema of the company.
+      - User.js         ---- Mongoose schema of the user. Contains password hashing functions
+    - routes 
+      - api
+        - companies.js  ---- Contains all the endpoints related to companies.
+        - login.js      ---- Endpoint for logging in
+        - register.js   ---- Endpoint for registering
+    - .dockerignore
+    - .gitignore
+    - .env              ---- Environment variable file
+    - Dockerfile        ---- Docker configuration
+    - README.md
+    - package-lock.json
+    - package.json      ---- Dependency manager
+    - server.js         ---- Entry point to the application
 
 
 # Queries
@@ -55,12 +55,16 @@ Returns a JWT
 
 ## Companies
 #### Get companies
-```curl -X GET http://localhost:5000/api/companies```
+```
+curl -X GET http://localhost:5000/api/companies
+```
 Returns an array containing all companies
 
 
 #### Get company
-```curl -X GET http://localhost:5000/api/companies/:id```
+```
+curl -X GET http://localhost:5000/api/companies/:id
+```
 Returns requested company
 
 
@@ -99,16 +103,22 @@ Returns updated company
 #### Delete company
 Requires to be logged in
 Requires to be owner of the company
-```curl -H "authorization: <your-token>" -X DELETE http://localhost:5000/api/companies/:id```
+```
+curl -H "authorization: <your-token>" -X DELETE http://localhost:5000/api/companies/:id
+```
 Returns the id of the deleted company
 
 
 #### Get beneficial owners
-```curl -X GET http://localhost:5000/api/companies/:id/invite```
+```
+curl -X GET http://localhost:5000/api/companies/:id/invite
+```
 Returns an array containing the first name and the last name of all the beneficial owners of the company
 
 
 #### Add beneficial owners
 Requires to be logged in
 Requires to be owner of the company
-```curl -d '{"email":"value"}' -H "Content-Type: application/json" -H "authorization: <your-token>" -X POST http://localhost:5000/api/companies/:id/invite```
+```
+curl -d '{"email":"value"}' -H "Content-Type: application/json" -H "authorization: <your-token>" -X POST http://localhost:5000/api/companies/:id/invite
+```
