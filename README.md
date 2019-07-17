@@ -6,9 +6,9 @@ The application allows to register and login using email / password. Users are a
 ### Live demo 
 https://corporate-moon.herokuapp.com/
 
-# [Client overview](client/README.md)
+# [Client overview](client)
 
-# [Server overview](server/README.md)
+# [Server overview](server)
 
 # Getting started
 ### Setup
