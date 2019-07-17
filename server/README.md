@@ -33,7 +33,7 @@
 
 
 # Queries
-## Register
+#### Register
 ```
 curl -d '{
     "firstName":"value",
@@ -44,7 +44,7 @@ curl -d '{
 ```
 Returns a JWT
 
-## Login 
+#### Login 
 ```
 curl -d '{
     "email":"value",
@@ -53,7 +53,6 @@ curl -d '{
 ```
 Returns a JWT
 
-## Companies
 #### Get companies
 ```
 curl -X GET http://localhost:5000/api/companies
