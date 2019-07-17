@@ -68,7 +68,7 @@ Returns requested company
 
 
 #### Create company 
-Requires to be logged in
+Requires token
 ```
 curl -d '{
     "name":"value",
@@ -83,8 +83,8 @@ Returns created company
 
 
 #### Update company
-Requires to be logged in
-Requires to be owner or beneficial owner of the company
+Requires token
+Requires the user to be owner or beneficial owner of the company
 Options that are not specified will be omitted from the update. (Example: if no email is specified the company will remain with the previous email)
 ```
 curl -d '{
@@ -100,8 +100,8 @@ Returns updated company
 
 
 #### Delete company
-Requires to be logged in
-Requires to be owner of the company
+Requires token
+Requires the user to be owner of the company
 ```
 curl -H "authorization: <your-token>" -X DELETE http://localhost:5000/api/companies/:id
 ```
@@ -116,8 +116,8 @@ Returns an array containing the first name and the last name of all the benefici
 
 
 #### Add beneficial owners
-Requires to be logged in
-Requires to be owner of the company
+Requires token
+Requires the user to be owner of the company
 ```
 curl -d '{"email":"value"}' -H "Content-Type: application/json" -H "authorization: <your-token>" -X POST http://localhost:5000/api/companies/:id/invite
 ```
