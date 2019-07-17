@@ -55,9 +55,10 @@ npm run build
 5. Run ```heroku container:release --app=<app-name> web``` to release your application.
 
 
-# Code overview
-### [Client](client/README.md)
-### [Server](server/README.md)
+# [Client overview](client/README.md)
+
+
+# [Server overview](server/README.md)
 
 
 # Docker Tips
