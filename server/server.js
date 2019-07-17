@@ -31,7 +31,7 @@ if (!isDev) {
 }
 
 app.listen(port, () => {
-    console.log(`Server started on port ${port}`)
+    console.log(`Server started in ${NODE_ENV} mode. Server started on port ${port}`)
 });
 
 module.exports = app;

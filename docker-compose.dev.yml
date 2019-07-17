@@ -1,0 +1,18 @@
+version: "3"
+services: 
+  client:
+    command: npm run serve
+    container_name: corporate-moon-client
+    build: ./client
+    ports: 
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+  server: 
+    command: npm run dev
+    container_name: corporate-moon-server
+    build: ./server
+    ports: 
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
