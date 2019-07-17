@@ -4,8 +4,8 @@
   "description": "Full stack application using vue.js for the client side and nodejs/express for the server side.",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "dev": "nodemon server/server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
