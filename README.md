@@ -22,6 +22,7 @@ ATLAS_URI=mongoDbConnectionString
 
 3. Run ```docker-compose -f docker-compose.dev.yml up```. This will host our images inside a docker container. After this step you should be able to access the client development server on http://localhost:8080/ and nodemon server for service side development on http://localhost:5000/.
 
+
 To stop the containers run ```docker-compose -f docker-compose.dev.yml down```
 
 To rebuild containers run ```docker-compose -f docker-compose.dev.yml build```
