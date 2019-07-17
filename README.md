@@ -6,6 +6,9 @@ The application allows to register and login using email / password. Users are a
 ### Live demo 
 https://corporate-moon.herokuapp.com/
 
+# [Client overview](client/README.md)
+
+# [Server overview](server/README.md)
 
 # Getting started
 ### Setup
@@ -53,13 +56,6 @@ npm run build
 4. Find the image created and run the following command ```docker tag <image-id> registry.heroku.com/<app-name>/web``` to register the image with Heroku.
 4. Run ```docker push registry.heroku.com/<app-name>/web ``` to push the image
 5. Run ```heroku container:release --app=<app-name> web``` to release your application.
-
-
-# [Client overview](client/README.md)
-
-
-# [Server overview](server/README.md)
-
 
 # Docker Tips
 Docker can take up some space quickly, and when errors happen, you sometimes get stuck with intermediate containers not being destroyed. Here are a couple of commands to help you see whats going on and clean up your machine.
