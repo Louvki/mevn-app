@@ -2,7 +2,7 @@ version: "3"
 services: 
   client:
     command: npm run serve
-    container_name: corporate-moon-client
+    container_name: mevn-app-client
     build: ./client
     ports: 
       - "8080:8080"
@@ -10,7 +10,7 @@ services:
       - NODE_ENV=development
   server: 
     command: npm run dev
-    container_name: corporate-moon-server
+    container_name: mevn-app-server
     build: ./server
     ports: 
       - "5000:5000"
