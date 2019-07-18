@@ -1,5 +1,5 @@
 # MEVN-app
-Application made using MEVN (MongoDB Cloud/Express/Vue/Node.js) stack. Containarized using Docker. 
+Application made using MEVN (MongoDB Cloud/Express/Vue/Node.js) stack. Containarized using Docker. Using Vuex for state management on the client side.
 
 The application allows to register and login using email / password. Users are authenticated using JWT tokens. Logged in users can create/update/delete companies and invite other users to become beneficial owners.
 
